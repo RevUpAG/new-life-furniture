@@ -8,6 +8,26 @@ btn.addEventListener('click', () => {
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && nav.classList.contains('open')) { btn.click(); btn.focus(); } });
 document.getElementById('yr').textContent = new Date().getFullYear();
 
+// Services dropdown (click/tap; hover handled in CSS on desktop)
+const subBtn = document.querySelector('.sub-btn');
+subBtn.addEventListener('click', ev => { ev.stopPropagation(); subBtn.setAttribute('aria-expanded', subBtn.getAttribute('aria-expanded') !== 'true'); });
+document.addEventListener('click', ev => { if (!ev.target.closest('.has-sub') && !nav.classList.contains('open')) subBtn.setAttribute('aria-expanded', 'false'); });
+document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && subBtn.getAttribute('aria-expanded') === 'true') { subBtn.setAttribute('aria-expanded', 'false'); subBtn.focus(); } });
+
+// Reviews carousel (mobile): arrow buttons + counter
+const track = document.getElementById('quotes');
+if (track) {
+  const [prev, next] = document.querySelectorAll('.car-btn'), count = document.querySelector('.car-count'), items = [...track.children];
+  const idx = () => Math.round(track.scrollLeft / (items[0].offsetWidth + 16));
+  const update = () => { const i = Math.min(idx(), items.length - 1); count.textContent = `${i + 1} / ${items.length}`; prev.disabled = i === 0; next.disabled = i >= items.length - 1; };
+  document.querySelectorAll('.car-btn').forEach(b => b.addEventListener('click', () => {
+    const i = Math.max(0, Math.min(items.length - 1, idx() + +b.dataset.dir));
+    track.scrollTo({left: items[i].offsetLeft - items[0].offsetLeft, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }));
+  track.addEventListener('scroll', () => requestAnimationFrame(update), {passive: true});
+  update();
+}
+
 // Header shadow on scroll
 const hdr = document.querySelector('.site-header');
 addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), {passive: true});
@@ -32,8 +52,8 @@ if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
 // Analytics: contact clicks -> dataLayer (GTM forwards to GA4 / Google Ads). No personal data is pushed.
 window.dataLayer = window.dataLayer || [];
 document.addEventListener('click', ev => {
-  const a = ev.target.closest('a[href^="tel:"],a[href^="mailto:"]');
-  if (a) dataLayer.push({event: a.href.startsWith('tel:') ? 'click_call' : 'click_email', click_location: a.dataset.ev || 'other'});
+  const a = ev.target.closest('a[href^="tel:"],a[href^="mailto:"],a[href^="https://wa.me/"]');
+  if (a) dataLayer.push({event: a.href.startsWith('tel:') ? 'click_call' : a.href.startsWith('mailto:') ? 'click_email' : 'click_whatsapp', click_location: a.dataset.ev || 'other'});
 });
 
 // Keep Google Ads click IDs for 90 days so a lead submitted on a later visit is still attributed.
