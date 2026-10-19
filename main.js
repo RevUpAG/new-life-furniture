@@ -12,11 +12,21 @@ document.getElementById('yr').textContent = new Date().getFullYear();
 const hdr = document.querySelector('.site-header');
 addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), {passive: true});
 
-// Scroll reveal (skipped for reduced motion)
-if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {rootMargin: '0px 0px -8% 0px'});
-  document.querySelectorAll('.section h2, .section .lead, .bento .card, .cards .card, .mosaic figure, .gallery figure, .steps li, .quote, .split > *, .path, .faq, .final-grid > *')
-    .forEach((el, i) => { el.classList.add('rv'); el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+// Scroll reveal: progressive enhancement that can never leave content hidden.
+// Checks positions on scroll/resize (works for jumps, anchors, restored scroll) so any way of reaching a section reveals it.
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  let els = [...document.querySelectorAll('.section h2, .section .lead, .bento .card, .cards .card, .mosaic figure, .gallery figure, .steps li, .quote, .split > *, .path, .faq, .final-grid > *')]
+    .filter(el => el.getBoundingClientRect().top > innerHeight);   // only animate what starts below the fold
+  els.forEach((el, i) => { el.classList.add('rv'); el.style.transitionDelay = (i % 4) * 70 + 'ms'; });
+  let ticking = false;
+  const check = () => {
+    ticking = false;
+    els = els.filter(el => { if (el.getBoundingClientRect().top < innerHeight * 0.92) { el.classList.add('in'); return false; } return true; });
+    if (!els.length) removeEventListener('scroll', onScroll);
+  };
+  const onScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(check); } };
+  addEventListener('scroll', onScroll, {passive: true}); addEventListener('resize', onScroll);
+  addEventListener('load', check); check();
 }
 
 // Analytics: contact clicks -> dataLayer (GTM forwards to GA4 / Google Ads). No personal data is pushed.
