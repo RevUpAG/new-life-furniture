@@ -8,6 +8,17 @@ btn.addEventListener('click', () => {
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && nav.classList.contains('open')) { btn.click(); btn.focus(); } });
 document.getElementById('yr').textContent = new Date().getFullYear();
 
+// Header shadow on scroll
+const hdr = document.querySelector('.site-header');
+addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), {passive: true});
+
+// Scroll reveal (skipped for reduced motion)
+if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add('in'); io.unobserve(x.target); } }), {rootMargin: '0px 0px -8% 0px'});
+  document.querySelectorAll('.section h2, .section .lead, .bento .card, .cards .card, .mosaic figure, .gallery figure, .steps li, .quote, .split > *, .path, .faq, .final-grid > *')
+    .forEach((el, i) => { el.classList.add('rv'); el.style.transitionDelay = (i % 4) * 70 + 'ms'; io.observe(el); });
+}
+
 // Analytics: contact clicks -> dataLayer (GTM forwards to GA4 / Google Ads). No personal data is pushed.
 window.dataLayer = window.dataLayer || [];
 document.addEventListener('click', ev => {
