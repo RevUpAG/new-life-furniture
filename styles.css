@@ -420,3 +420,69 @@ input,select,textarea{border-radius:10px}
 @media (min-width:1101px){.nav .sub{display:block}}
 @media (max-width:1100px){.nav .sub{display:none}.nav .sub-btn[aria-expanded=true]+.sub{display:block}}
 @media (max-width:600px){.trust{display:grid;grid-template-columns:repeat(3,auto);gap:8px 16px;font-size:.8rem;padding-top:16px}.trust strong{font-size:1.25rem}}
+
+/* ===== v4 ===== */
+/* header: bigger logo on mobile */
+@media (max-width:600px){
+  .header-in{height:84px}
+  .logo img{height:64px}
+  .nav{inset:84px 0 0}
+  .hero{min-height:calc(100svh - 84px)}
+}
+/* WhatsApp: visible on every screen size, above everything */
+.wa-float{display:grid!important;z-index:70}
+
+/* carousel controls (generic) */
+.car-ctrl{display:none;align-items:center;gap:12px}
+.car-ctrl.light .car-btn{background:transparent;border-color:rgba(255,255,255,.6);color:#fff}
+.car-ctrl.light .car-count{color:rgba(255,255,255,.7)}
+.row-head h2{margin-bottom:0}
+.row-head{margin-bottom:0}
+@media (max-width:760px){
+  .section{padding:64px 0}
+  .car-ctrl{display:flex;flex:none}
+  .car-btn{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--ink);background:#fff;color:var(--ink);font-size:1rem;cursor:pointer}
+  .car-btn:disabled{opacity:.3;cursor:default}
+  .car-count{font-size:.85rem;color:var(--muted);min-width:40px;text-align:center}
+  .row-head{flex-wrap:nowrap;align-items:flex-end}
+  .row-head h2{font-size:1.9rem}
+  .car-track{display:flex!important;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin:1.5rem calc(var(--gut)*-1) 0;padding:0 var(--gut) 4px;scroll-padding:0 var(--gut);scrollbar-width:none;grid-template-columns:none}
+  .car-track::-webkit-scrollbar{display:none}
+  .car-track>*{scroll-snap-align:start;flex:0 0 84%}
+  /* reviews: compact cards, same height */
+  .quotes.car-track{align-items:stretch}
+  .quotes .quote{padding:22px 22px 18px}
+  .quotes .quote blockquote{font-size:1.12rem;line-height:1.4;margin-bottom:12px}
+  .quote::before{font-size:4rem;right:16px}
+  /* project photos: one row */
+  .mosaic.car-track{grid-auto-rows:auto}
+  .mosaic.car-track figure{height:300px;grid-column:auto!important;grid-row:auto!important}
+  .mosaic.car-track figure:first-child{flex-basis:84%}
+}
+
+/* How it works */
+.process{background:var(--sand);position:relative;overflow:hidden}
+.process::before{content:"";position:absolute;width:520px;height:520px;border-radius:50%;background:var(--sun);opacity:.08;right:-160px;top:-160px}
+.process-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(40px,6vw,96px);align-items:start;position:relative}
+.process-intro{position:sticky;top:120px}
+.process-intro h2{font-size:clamp(2.2rem,4vw,3.4rem)}
+.timeline{list-style:none;margin:0;padding:0;position:relative;display:grid;gap:18px}
+.timeline::before{content:"";position:absolute;left:31px;top:32px;bottom:32px;width:2px;background:linear-gradient(var(--accent),rgba(180,83,26,.15))}
+.timeline li{position:relative;display:grid;grid-template-columns:64px 1fr;gap:20px;align-items:start;background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:22px 24px 22px 20px;box-shadow:0 14px 34px -26px rgba(36,34,31,.4);transition:transform .3s var(--ease),box-shadow .3s}
+.timeline li:hover{transform:translateX(6px);box-shadow:0 20px 40px -24px rgba(36,34,31,.45)}
+.step-mark{position:relative;width:64px;height:64px;border-radius:50%;background:var(--accent);color:#fff;display:grid;place-items:center;margin-left:-8px;box-shadow:0 0 0 6px var(--sand)}
+.step-num{position:absolute;top:-4px;right:-4px;width:24px;height:24px;border-radius:50%;background:var(--ink);color:#fff;font:600 .75rem/24px var(--sans);text-align:center}
+.step-label{font:600 .72rem var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--accent);margin:4px 0 4px}
+.timeline h3{font-size:1.55rem;margin-bottom:.25em}
+.timeline p:not(.step-label){color:var(--muted);margin:0;font-size:.97rem}
+@media (max-width:900px){
+  .process-grid{grid-template-columns:1fr}
+  .process-intro{position:static}
+  .process-intro .btn{display:none}
+  .timeline li{grid-template-columns:52px 1fr;gap:14px;padding:18px 18px 18px 14px}
+  .timeline li:hover{transform:none}
+  .step-mark{width:52px;height:52px;margin-left:-4px}
+  .step-mark svg{width:22px;height:22px}
+  .timeline::before{left:25px}
+  .timeline h3{font-size:1.35rem}
+}

@@ -14,19 +14,22 @@ subBtn.addEventListener('click', ev => { ev.stopPropagation(); subBtn.setAttribu
 document.addEventListener('click', ev => { if (!ev.target.closest('.has-sub') && !nav.classList.contains('open')) subBtn.setAttribute('aria-expanded', 'false'); });
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && subBtn.getAttribute('aria-expanded') === 'true') { subBtn.setAttribute('aria-expanded', 'false'); subBtn.focus(); } });
 
-// Reviews carousel (mobile): arrow buttons + counter
-const track = document.getElementById('quotes');
-if (track) {
-  const [prev, next] = document.querySelectorAll('.car-btn'), count = document.querySelector('.car-count'), items = [...track.children];
-  const idx = () => Math.round(track.scrollLeft / (items[0].offsetWidth + 16));
-  const update = () => { const i = Math.min(idx(), items.length - 1); count.textContent = `${i + 1} / ${items.length}`; prev.disabled = i === 0; next.disabled = i >= items.length - 1; };
-  document.querySelectorAll('.car-btn').forEach(b => b.addEventListener('click', () => {
+// Carousels (reviews, project photos): swipe on mobile, arrow buttons + counter. Desktop shows a grid, controls hidden by CSS.
+document.querySelectorAll('.car-track').forEach(track => {
+  const btns = document.querySelectorAll(`.car-btn[aria-controls="${track.id}"]`), [prev, next] = btns;
+  const count = prev.parentElement.querySelector('.car-count'), items = [...track.children];
+  const idx = () => { const l = track.scrollLeft + 1; let i = 0; items.forEach((it, k) => { if (it.offsetLeft - items[0].offsetLeft <= l) i = k; }); return i; };
+  const update = () => {
+    const i = idx(), end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+    count.textContent = `${end ? items.length : i + 1} / ${items.length}`; prev.disabled = i === 0; next.disabled = end;
+  };
+  btns.forEach(b => b.addEventListener('click', () => {
     const i = Math.max(0, Math.min(items.length - 1, idx() + +b.dataset.dir));
     track.scrollTo({left: items[i].offsetLeft - items[0].offsetLeft, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
   }));
   track.addEventListener('scroll', () => requestAnimationFrame(update), {passive: true});
-  update();
-}
+  addEventListener('resize', update); update();
+});
 
 // Header shadow on scroll
 const hdr = document.querySelector('.site-header');
@@ -35,7 +38,7 @@ addEventListener('scroll', () => hdr.classList.toggle('scrolled', scrollY > 8), 
 // Scroll reveal: progressive enhancement that can never leave content hidden.
 // Checks positions on scroll/resize (works for jumps, anchors, restored scroll) so any way of reaching a section reveals it.
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  let els = [...document.querySelectorAll('.section h2, .section .lead, .bento .card, .cards .card, .mosaic figure, .gallery figure, .steps li, .quote, .split > *, .path, .faq, .final-grid > *')]
+  let els = [...document.querySelectorAll('.section h2, .section .lead, .bento .card, .cards .card, .mosaic figure, .gallery figure, .timeline li, .quote, .split > *, .path, .faq, .final-grid > *')]
     .filter(el => el.getBoundingClientRect().top > innerHeight);   // only animate what starts below the fold
   els.forEach((el, i) => { el.classList.add('rv'); el.style.transitionDelay = (i % 4) * 70 + 'ms'; });
   let ticking = false;
