@@ -486,3 +486,31 @@ input,select,textarea{border-radius:10px}
   .timeline::before{left:25px}
   .timeline h3{font-size:1.35rem}
 }
+
+/* ===== v5: WhatsApp button (dynamic) ===== */
+.wa-wrap{position:fixed;right:20px;bottom:24px;z-index:70;display:flex;flex-direction:column;align-items:flex-end;gap:12px}
+.wa-wrap .wa-float{position:relative;right:auto;bottom:auto;width:auto;height:62px;border-radius:999px;padding:0 22px 0 8px;display:flex!important;align-items:center;gap:10px;color:#fff;text-decoration:none;font-weight:600;
+  background:linear-gradient(135deg,#25d366,#128c7e);box-shadow:0 14px 34px -10px rgba(18,140,126,.75);animation:waWiggle 6s ease-in-out 3s infinite}
+.wa-wrap .wa-float::after{border-color:#25d366}
+.wa-icon{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.18);display:grid;place-items:center}
+.wa-label{white-space:nowrap;font-size:.98rem}
+.wa-dot{position:absolute;top:-2px;right:-2px;width:16px;height:16px;border-radius:50%;background:var(--accent);border:2px solid #fff}
+.wa-dot::after{content:"";position:absolute;inset:-2px;border-radius:50%;background:var(--accent);animation:waPulse 1.8s ease-out infinite}
+.wa-wrap .wa-float:hover{transform:translateY(-3px) scale(1.03);animation-play-state:paused}
+@keyframes waWiggle{0%,88%,100%{transform:none}90%{transform:rotate(-6deg) scale(1.06)}92%{transform:rotate(6deg) scale(1.06)}94%{transform:rotate(-4deg)}96%{transform:rotate(3deg)}}
+.wa-bubble{position:relative;margin:0;max-width:250px;background:#fff;color:var(--ink);border-radius:16px 16px 4px 16px;padding:14px 34px 14px 16px;box-shadow:0 18px 40px -16px rgba(0,0,0,.4);font-size:.88rem;line-height:1.4;
+  opacity:0;visibility:hidden;transform:translateY(10px) scale(.96);transform-origin:bottom right;transition:opacity .3s,transform .35s var(--ease),visibility .3s}
+.wa-bubble strong{display:block;font-size:.95rem;margin-bottom:2px}
+.wa-bubble span{color:var(--muted)}
+.wa-close{position:absolute;top:6px;right:6px;width:28px;height:28px;border:0;background:none;font-size:1.2rem;line-height:1;color:var(--muted);cursor:pointer;border-radius:50%}
+.wa-close:hover{background:var(--sand)}
+.show-bubble .wa-bubble{opacity:1;visibility:visible;transform:none}
+@media (max-width:760px){
+  .wa-wrap{right:14px;bottom:76px}
+  .wa-wrap .wa-float{width:58px;height:58px;padding:0;justify-content:center}
+  .wa-label{display:none}
+  .wa-icon{background:none}
+  .wa-bubble{max-width:230px}
+}
+@media (prefers-reduced-motion:reduce){.wa-wrap .wa-float,.wa-dot::after{animation:none}}
+.car-btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}

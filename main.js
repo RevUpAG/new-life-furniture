@@ -15,20 +15,26 @@ document.addEventListener('click', ev => { if (!ev.target.closest('.has-sub') &&
 document.addEventListener('keydown', ev => { if (ev.key === 'Escape' && subBtn.getAttribute('aria-expanded') === 'true') { subBtn.setAttribute('aria-expanded', 'false'); subBtn.focus(); } });
 
 // Carousels (reviews, project photos): swipe on mobile, arrow buttons + counter. Desktop shows a grid, controls hidden by CSS.
+// iOS Safari cancels smooth programmatic scrolls on scroll-snap containers, so snap is paused while an arrow scroll runs.
 document.querySelectorAll('.car-track').forEach(track => {
   const btns = document.querySelectorAll(`.car-btn[aria-controls="${track.id}"]`), [prev, next] = btns;
   const count = prev.parentElement.querySelector('.car-count'), items = [...track.children];
-  const idx = () => { const l = track.scrollLeft + 1; let i = 0; items.forEach((it, k) => { if (it.offsetLeft - items[0].offsetLeft <= l) i = k; }); return i; };
-  const update = () => {
-    const i = idx(), end = track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
-    count.textContent = `${end ? items.length : i + 1} / ${items.length}`; prev.disabled = i === 0; next.disabled = end;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const pos = i => items[i].offsetLeft - items[0].offsetLeft;
+  const nearest = () => items.reduce((best, _, k) => Math.abs(pos(k) - track.scrollLeft) < Math.abs(pos(best) - track.scrollLeft) ? k : best, 0);
+  const atEnd = () => track.scrollLeft + track.clientWidth >= track.scrollWidth - 2;
+  let cur = 0, busy = false, timer;
+  const render = () => { count.textContent = `${cur + 1} / ${items.length}`; prev.disabled = cur === 0; next.disabled = cur === items.length - 1 || (atEnd() && !busy); };
+  const go = i => {
+    cur = Math.max(0, Math.min(items.length - 1, i)); busy = true; render();
+    track.style.scrollSnapType = 'none';
+    track.scrollTo({left: pos(cur), behavior: reduce ? 'auto' : 'smooth'});
+    clearTimeout(timer);
+    timer = setTimeout(() => { track.style.scrollSnapType = ''; busy = false; render(); }, reduce ? 50 : 650);
   };
-  btns.forEach(b => b.addEventListener('click', () => {
-    const i = Math.max(0, Math.min(items.length - 1, idx() + +b.dataset.dir));
-    track.scrollTo({left: items[i].offsetLeft - items[0].offsetLeft, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
-  }));
-  track.addEventListener('scroll', () => requestAnimationFrame(update), {passive: true});
-  addEventListener('resize', update); update();
+  btns.forEach(b => b.addEventListener('click', () => go(cur + +b.dataset.dir)));
+  track.addEventListener('scroll', () => { if (!busy) requestAnimationFrame(() => { cur = atEnd() ? items.length - 1 : nearest(); render(); }); }, {passive: true});
+  addEventListener('resize', render); render();
 });
 
 // Header shadow on scroll
@@ -113,3 +119,16 @@ document.querySelectorAll('.lead-form').forEach(form => {
     }
   });
 });
+
+// WhatsApp: show a short prompt bubble once per session after a few seconds
+const waWrap = document.querySelector('.wa-wrap');
+if (waWrap) {
+  let seen = false; try { seen = sessionStorage.getItem('nlf_wa') === '1'; } catch (_) {}
+  const hide = () => { waWrap.classList.remove('show-bubble'); try { sessionStorage.setItem('nlf_wa', '1'); } catch (_) {} };
+  if (!seen) {
+    setTimeout(() => waWrap.classList.add('show-bubble'), 4000);
+    setTimeout(hide, 14000);
+  }
+  waWrap.querySelector('.wa-close').addEventListener('click', hide);
+  waWrap.querySelector('.wa-float').addEventListener('click', hide);
+}
