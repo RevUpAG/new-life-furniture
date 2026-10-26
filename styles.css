@@ -514,3 +514,40 @@ input,select,textarea{border-radius:10px}
 }
 @media (prefers-reduced-motion:reduce){.wa-wrap .wa-float,.wa-dot::after{animation:none}}
 .car-btn{touch-action:manipulation;-webkit-tap-highlight-color:transparent}
+
+/* ===== v6: Angi award ===== */
+.angi{display:inline-flex;align-items:center;gap:14px;text-decoration:none;color:inherit;margin:4px 0 22px}
+.angi .angi-img{width:64px;height:auto;flex:none;filter:drop-shadow(0 8px 14px rgba(0,0,0,.25))}
+.angi p{margin:0;line-height:1.3}
+.angi strong{display:block;font-size:1rem}
+.angi span{font-size:.85rem;opacity:.75}
+a.angi:hover strong{text-decoration:underline}
+.on-dark{color:#fff}
+.foot-angi{margin-top:4px}
+.foot-angi .angi-img{width:56px}
+/* hero: the award leads the trust row */
+.trust-angi{display:flex;align-items:center;gap:12px}
+.trust-angi img{width:82px;height:auto;filter:drop-shadow(0 10px 18px rgba(0,0,0,.4));animation:angiIn .9s var(--ease) .5s both}
+.trust-angi span{color:rgba(255,255,255,.85);font-size:.92rem;line-height:1.3;max-width:150px}
+.trust-angi strong{display:block;font-size:1.6rem}
+@keyframes angiIn{from{opacity:0;transform:scale(.6) rotate(-12deg)}}
+@media (max-width:600px){
+  .trust{grid-template-columns:repeat(3,1fr)}
+  .trust-angi{grid-column:1/-1;padding-bottom:6px}
+  .trust-angi img{width:64px}
+  .trust-angi span{max-width:none;font-size:.85rem}
+  .trust-angi strong{font-size:1.3rem}
+}
+@media (prefers-reduced-motion:reduce){.trust-angi img{animation:none}}
+/* big award seal on the hero (desktop); compact version lives in the trust row */
+.hero-award{display:none}
+@media (min-width:901px){
+  .hero-award{display:block;position:absolute;right:clamp(32px,6vw,110px);bottom:clamp(56px,10vh,110px);width:clamp(150px,13vw,200px);z-index:1;animation:angiIn 1s var(--ease) .6s both}
+  .hero-award img{width:100%;height:auto;filter:drop-shadow(0 22px 34px rgba(0,0,0,.55));transition:transform .4s var(--ease)}
+  .hero-award img:hover{transform:rotate(-4deg) scale(1.05)}
+  .trust-angi{display:none!important}
+}
+@media (max-width:900px){.trust-angi img{width:84px}}
+.lp-copy .angi{display:flex}
+.lp-copy .angi .angi-img{width:76px}
+@media (min-width:901px){.hero-award{bottom:auto;top:clamp(110px,22vh,200px);width:clamp(160px,14vw,210px)}}
