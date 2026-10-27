@@ -551,3 +551,8 @@ a.angi:hover strong{text-decoration:underline}
 .lp-copy .angi{display:flex}
 .lp-copy .angi .angi-img{width:76px}
 @media (min-width:901px){.hero-award{bottom:auto;top:clamp(110px,22vh,200px);width:clamp(160px,14vw,210px)}}
+/* 7 service tiles: 2 large + 3 + 2 */
+@media (min-width:901px){
+  .bento .card:nth-child(3),.bento .card:nth-child(4),.bento .card:nth-child(5){grid-column:span 2}
+  .bento .card:nth-child(6),.bento .card:nth-child(7){grid-column:span 3}
+}
