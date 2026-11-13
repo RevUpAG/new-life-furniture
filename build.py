@@ -20,7 +20,7 @@ BIZ = dict(
 )
 WA_TEXT = "Hi%20New%20Life%20Furniture%2C%20I%27d%20like%20a%20free%20estimate."
 GTM_ID = "GTM-NW3P7QNL"        # existing container found on the live site
-FORMSPREE_ID = ""             # TODO: create a Formspree form (or other endpoint) and paste its ID
+FORMSPREE_ID = "newlifefurnitureads@gmail.com"             # FormSubmit alias (formsubmit.co/ajax/<alias>) for newlifefurniture@gmail.com
 
 e = html.escape
 

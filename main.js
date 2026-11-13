@@ -106,8 +106,11 @@ document.querySelectorAll('.lead-form').forEach(form => {
     }
     submit.disabled = true; submit.textContent = 'Sending…'; status.className = 'form-status'; status.textContent = '';
     try {
-      const r = await fetch('https://formspree.io/f/' + endpoint, {method: 'POST', body: new FormData(form), headers: {Accept: 'application/json'}});
-      if (!r.ok) throw new Error(r.status);
+      const d = new FormData(form); d.delete('_gotcha');
+      d.append('_subject', 'New estimate request: ' + (f.service.value || 'website')); d.append('_template', 'table'); d.append('_captcha', 'false');
+      const r = await fetch('https://formsubmit.co/ajax/' + endpoint, {method: 'POST', body: d, headers: {Accept: 'application/json'}});
+      const j = await r.json().catch(() => ({}));
+      if (!r.ok || String(j.success) !== 'true') throw new Error(r.status);
       form.dataset.sent = '1';
       dataLayer.push({event: 'generate_lead', form_service: f.service.value, project_type: f.project_type.value}); // fired only after a confirmed submission
       form.reset(); submit.textContent = 'Sent';
