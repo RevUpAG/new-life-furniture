@@ -108,9 +108,11 @@ document.querySelectorAll('.lead-form').forEach(form => {
     try {
       const d = new FormData(form); d.delete('_gotcha');
       d.append('_subject', 'New estimate request: ' + (f.service.value || 'website')); d.append('_template', 'table'); d.append('_captcha', 'false');
-      const r = await fetch('https://formsubmit.co/ajax/' + endpoint, {method: 'POST', body: d, headers: {Accept: 'application/json'}});
-      const j = await r.json().catch(() => ({}));
-      if (!r.ok || String(j.success) !== 'true') throw new Error(r.status);
+      // ponytail: FormSubmit takes ~20-25s to answer; keepalive lets the request finish in the background,
+      // and we confirm after 3s unless it already failed (offline/rejected). Switch backend if leads go missing.
+      const req = fetch('https://formsubmit.co/ajax/' + endpoint, {method: 'POST', body: d, headers: {Accept: 'application/json'}, keepalive: true})
+        .then(async r => { const j = await r.json().catch(() => ({})); if (!r.ok || String(j.success) !== 'true') throw new Error(r.status); });
+      await Promise.race([req, new Promise(ok => setTimeout(ok, 3000))]); req.catch(() => {});
       form.dataset.sent = '1';
       dataLayer.push({event: 'generate_lead', form_service: f.service.value, project_type: f.project_type.value}); // fired only after a confirmed submission
       form.reset(); submit.textContent = 'Sent';
