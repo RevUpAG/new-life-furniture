@@ -11,7 +11,6 @@ DIMS = json.load(open(ROOT / "dims.json"))
 BIZ = dict(
     name="New Life Furniture Mfg.",
     phone="(954) 895-8504", tel="+19548958504",
-    phone2="(786) 348-8650", tel2="+17863488650",
     email="Ian@newlifefurniture.com",
     street="380 NE 56th St, Unit 380", city="Miami", region="FL", zip="33137",
     whatsapp="19548958504",  # confirmed by client: main line has WhatsApp
@@ -271,7 +270,7 @@ def page(path, title, desc, body, crumb=None, extra_schema=(), preload=None, noi
   <p>Custom upholstery, reupholstery, and fabrication for homes and businesses across South Florida for more than 30 years.</p></div>
   <div><h2 class="foot-h">Services</h2><ul>{"".join(f'<li><a href="{h}">{t}</a></li>' for h, t in NAV[:N_SERV])}<li><a href="/upholstery-re-upholstery/#refinishing">Refinishing</a></li></ul></div>
   <div><h2 class="foot-h">Visit or call</h2><address>{BIZ["name"]}<br>{BIZ["street"]}<br>{BIZ["city"]}, {BIZ["region"]} {BIZ["zip"]}</address>
-  <ul><li><a href="tel:{BIZ["tel"]}" data-ev="footer">{BIZ["phone"]}</a></li><li><a href="tel:{BIZ["tel2"]}" data-ev="footer">{BIZ["phone2"]}</a></li><li><a href="mailto:{BIZ["email"]}" data-ev="footer">{BIZ["email"]}</a></li><li><a href="{BIZ["instagram"]}" rel="noopener" target="_blank">Instagram</a></li></ul></div>
+  <ul><li><a href="tel:{BIZ["tel"]}" data-ev="footer">{BIZ["phone"]}</a></li><li><a href="mailto:{BIZ["email"]}" data-ev="footer">{BIZ["email"]}</a></li><li><a href="{BIZ["instagram"]}" rel="noopener" target="_blank">Instagram</a></li></ul></div>
 </div><div class="wrap foot-bottom"><p>© <span id="yr">2026</span> {BIZ["name"]} · Miami, Florida</p><p><a href="/contact-new-life-furniture-miami/">Request an estimate</a></p></div></footer>
 <div class="wa-wrap"><p class="wa-bubble" role="status"><button type="button" class="wa-close" aria-label="Dismiss">×</button><strong>Questions about your project?</strong><span>Send us photos on WhatsApp for a quick quote.</span></p>
 <a class="wa-float" href="https://wa.me/{BIZ["whatsapp"]}?text={WA_TEXT}" target="_blank" rel="noopener" data-ev="float" aria-label="Chat with us on WhatsApp"><span class="wa-icon"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 00-11.2 19.6L3 29l6.6-1.7A13 13 0 1016 3zm0 23.7a10.7 10.7 0 01-5.5-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1116 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.8 8.8 0 01-4.4-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 00-.9.4 3.7 3.7 0 00-1.1 2.7 6.4 6.4 0 001.3 3.4 14.6 14.6 0 005.6 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 002.2-1.6 2.8 2.8 0 00.2-1.6c0-.2-.3-.3-.6-.5z"/></svg></span><span class="wa-label">Chat on WhatsApp</span><span class="wa-dot" aria-hidden="true"></span></a></div>
@@ -499,7 +498,7 @@ def contact():
 <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Contact</span></nav>
 <h1>Request a free estimate</h1>
 <p class="lead">Tell us about your furniture or project. Photos help us give you a faster, more accurate estimate. You can also text or email them after you submit.</p>
-<ul class="contact-list big"><li><span>Call</span><a href="tel:{BIZ["tel"]}" data-ev="contact">{BIZ["phone"]}</a></li><li><span>Alt. phone</span><a href="tel:{BIZ["tel2"]}" data-ev="contact">{BIZ["phone2"]}</a></li>
+<ul class="contact-list big"><li><span>Call</span><a href="tel:{BIZ["tel"]}" data-ev="contact">{BIZ["phone"]}</a></li>
 <li><span>Email</span><a href="mailto:{BIZ["email"]}" data-ev="contact">{BIZ["email"]}</a></li><li><span>Workshop</span>{BIZ["street"]}<br>{BIZ["city"]}, {BIZ["region"]} {BIZ["zip"]}</li></ul>
 <p class="fine">Serving homes and businesses across South Florida.</p></div>
 <div class="lp-form">{form()}</div></div></section>
