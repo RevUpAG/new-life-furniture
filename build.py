@@ -194,6 +194,7 @@ def service_page(s):
   <div class="split-img">{img(s["gallery"][0][0], s["gallery"][0][1])}</div>
   <div><p class="eyebrow">{s["crumb"]}</p><h2>{s["h2"]}</h2>{s["body"]}<h3>What's included</h3><ul class="checks">{bullets}</ul></div>
 </div></section>
+{s.get("extra", "")}
 <section class="section dark"><div class="wrap"><p class="eyebrow">Recent work</p><div class="car" data-car><div class="row-head"><h2>{s["gallery_title"]}</h2>{car_ctrl("svc-gal", "photo", light=True)}</div><div class="mosaic m3 car-track" id="svc-gal">{gallery}</div></div>
 <p class="center"><a class="link light" href="/projects/">See more projects <span aria-hidden="true">→</span></a></p></div></section>
 {process()}
@@ -302,15 +303,31 @@ R_DRP = C("/draperies/", "drapes4", "Draperies", "Custom draperies, shades, and 
 
 SERVICES = [
  dict(path="/upholstery-re-upholstery/", crumb="Furniture Reupholstery", service="Furniture reupholstery",
-  title="Furniture Reupholstery in Miami | New Life Furniture",
-  desc="Expert furniture reupholstery and custom upholstery in Miami and South Florida. Sofas, chairs, dining sets, and antiques. 30+ years. Free estimates.",
-  h1="Furniture reupholstery in Miami, done by hand",
-  lead="Keep the furniture you love and make it look, feel, and sit like new. We rebuild, re-pad, and recover sofas, chairs, sectionals, and heirlooms for homes across South Florida.",
+  title="Furniture Reupholstery Miami | Cost, Process & Free Quote",
+  desc="Miami workshop reupholstering sofas, chairs, sectionals, and dining sets. What affects the cost, when it's worth it, and a free estimate from photos.",
+  h1="Furniture reupholstery in Miami, done by hand in our shop",
+  lead="We reupholster sofas, chairs, sectionals, dining sets, and heirlooms in our Miami workshop at 380 NE 56th St. Send a few photos and we'll reply with a free written estimate, including cost and timeline, before any work starts.",
   ticks=["30+ years of upholstery craftsmanship", "Fabrics, leather, and vinyl to choose from", "Free, no-obligation estimates"],
   image="sofa", image_alt="Living room sofa reupholstered in new fabric",
   h2="Better than new, often for less than replacement",
   body="<p>Well-built furniture is worth saving. Frames from decades ago are often stronger than what's sold today. Our upholsterers strip the piece to the frame, repair joints and springs, replace worn foam and padding, and recover it in the material you choose.</p><p>Not sure about fabric? We'll bring samples and guide you toward options that suit the room, the way you live, and South Florida's sun and humidity.</p><h3 id=\"refinishing\">Wood refinishing, too</h3><p>Exposed wood arms, legs, and dining tables can be refinished to match, so the whole piece looks complete.</p>",
   includes=["Sofas, loveseats, and sectionals", "Dining and accent chairs", "Headboards and ottomans", "Antique and heirloom pieces", "New foam, padding, and spring repair", "Wood touch-up and refinishing"],
+  extra='''<section class="section"><div class="wrap narrow">
+<p class="eyebrow">Before you decide</p><h2 id="worth-it">Is it worth reupholstering your furniture?</h2>
+<p>Usually yes when the frame is solid and you like the size and shape. Usually no when the frame is cracked particleboard or the piece was inexpensive to begin with. We'll tell you honestly which case yours is.</p>
+<div class="table-wrap"><table class="cmp"><thead><tr><th scope="col">Reupholster when…</th><th scope="col">Replace when…</th></tr></thead><tbody>
+<tr><td>The frame is hardwood and joints are tight or repairable</td><td>The frame is particleboard, cracked, or warped</td></tr>
+<tr><td>It's an heirloom, antique, or designer piece</td><td>You no longer like the size or shape</td></tr>
+<tr><td>Only the fabric, foam, or springs are worn</td><td>A comparable new piece costs less than the labor</td></tr>
+<tr><td>It fits a space perfectly (built-ins, bay windows, dining sets)</td><td>You need it in days rather than weeks</td></tr>
+</tbody></table></div>
+<h2 id="cost">How much does furniture reupholstery cost in Miami?</h2>
+<p>The price of a reupholstery job depends on the piece and the work it needs. These are the factors in every estimate:</p>
+<ul class="checks"><li>Size and style (armchair, sofa, sectional, dining chair)</li><li>Yards of fabric, and whether patterns must be matched</li><li>Material: fabric, performance fabric, leather, or vinyl</li><li>New foam, padding, webbing, or spring repairs</li><li>Tufting, channels, welting, or skirts</li><li>Frame repair or wood refinishing</li></ul>
+<p>Send photos of the piece through the form above and we'll reply with a written quote. If you already have fabric, tell us and we'll calculate the yardage.</p>
+<h2 id="fabrics">Choosing fabric for Miami homes</h2>
+<p>South Florida's sun, humidity, and salt air are hard on upholstery. For sunny rooms and homes near the water we often recommend performance fabrics that resist fading, moisture, and stains. Leather and marine-grade vinyl are good options for heavy daily use. We bring samples so you can see them in your own light.</p>
+</div></section>''',
   gallery_title="Residential reupholstery projects",
   gallery=[("diningset", ""), ("armchair", ""), ("diningchair", ""), ("reup", ""), ("team", ""), ("dining", "")],
   faq=[("Is it worth reupholstering my furniture instead of buying new?", "If the frame is solid hardwood and you like the shape and size, reupholstery usually gives you a better-built piece than a comparable new one. We'll tell you honestly if a piece isn't worth the investment."),
