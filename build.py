@@ -11,13 +11,17 @@ DIMS = json.load(open(ROOT / "dims.json"))
 BIZ = dict(
     name="New Life Furniture Mfg.",
     phone="(954) 895-8504", tel="+19548958504",
-    email="Ian@newlifefurniture.com",
-    street="380 NE 56th St, Unit 380", city="Miami", region="FL", zip="33137",
+    email="newlifefurnituremfg@gmail.com",
+    street="380 NE 56th St", city="Miami", region="FL", zip="33137",
     whatsapp="19548958504",  # confirmed by client: main line has WhatsApp
     angi="",  # TODO: paste the client's Angi profile URL -> badges link to it and it's added to schema sameAs
+    hours="Monday–Friday, 9 AM–4 PM", opens="09:00", closes="16:00",
+    # Google Business Profile at 380 NE 56th St (the one the client manages)
+    lat=25.8271391, lng=-80.1884659, maps="https://www.google.com/maps?cid=10374512186833146606",
+    review="https://search.google.com/local/writereview?placeid=ChIJa7tGD_yx2YgR7pImDt6r-Y8",
     instagram="https://www.instagram.com/newlifefurnituremfg",
 )
-WA_TEXT = "Hi%20New%20Life%20Furniture%2C%20I%27d%20like%20a%20free%20estimate."
+WA_TEXT = "Hi%20New%20Life%20Furniture%20Mfg.%2C%20I%27d%20like%20a%20free%20estimate."
 GTM_ID = "GTM-NW3P7QNL"        # existing container found on the live site
 FORMSPREE_ID = "newlifefurnitureads@gmail.com"             # FormSubmit alias (formsubmit.co/ajax/<alias>) for newlifefurniture@gmail.com
 
@@ -260,18 +264,18 @@ def page(path, title, desc, body, crumb=None, extra_schema=(), preload=None, noi
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id={GTM_ID}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <a class="skip" href="#main">Skip to content</a>
 <header class="site-header"><div class="wrap header-in">
-  <a class="logo" href="/" aria-label="New Life Furniture home"><img src="/img/logo.png" width="768" height="294" alt="New Life Furniture"></a>
+  <a class="logo" href="/" aria-label="New Life Furniture Mfg. home"><img src="/img/logo.png" width="768" height="294" alt="New Life Furniture Mfg."></a>
   <nav class="nav" aria-label="Main"><ul id="menu">{nav}</ul></nav>
   <div class="header-cta"><a class="call-btn" href="tel:{BIZ["tel"]}" data-ev="header" aria-label="Call {BIZ["phone"]}"><svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M6.6 10.8a15.1 15.1 0 006.6 6.6l2.2-2.2a1 1 0 011-.25 11.4 11.4 0 003.6.57 1 1 0 011 1V20a1 1 0 01-1 1A17 17 0 013 4a1 1 0 011-1h3.5a1 1 0 011 1c0 1.25.2 2.45.57 3.57a1 1 0 01-.25 1z"/></svg><span>{BIZ["phone"]}</span></a><a class="btn btn-primary btn-sm" href="/contact-new-life-furniture-miami/">Free Estimate</a></div>
   <button class="menu-btn" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><span></span><span></span></button>
 </div></header>
 <main id="main">{body}</main>
 <footer class="site-footer"><div class="wrap foot-grid">
-  <div><img class="foot-logo" src="/img/logo.png" width="768" height="294" alt="New Life Furniture" loading="lazy">{angi_badge("on-dark foot-angi")}
+  <div><img class="foot-logo" src="/img/logo.png" width="768" height="294" alt="New Life Furniture Mfg." loading="lazy">{angi_badge("on-dark foot-angi")}
   <p>Custom upholstery, reupholstery, and fabrication for homes and businesses across South Florida for more than 30 years.</p></div>
   <div><h2 class="foot-h">Services</h2><ul>{"".join(f'<li><a href="{h}">{t}</a></li>' for h, t in NAV[:N_SERV])}<li><a href="/upholstery-re-upholstery/#refinishing">Refinishing</a></li></ul></div>
-  <div><h2 class="foot-h">Visit or call</h2><address>{BIZ["name"]}<br>{BIZ["street"]}<br>{BIZ["city"]}, {BIZ["region"]} {BIZ["zip"]}</address>
-  <ul><li><a href="tel:{BIZ["tel"]}" data-ev="footer">{BIZ["phone"]}</a></li><li><a href="mailto:{BIZ["email"]}" data-ev="footer">{BIZ["email"]}</a></li><li><a href="{BIZ["instagram"]}" rel="noopener" target="_blank">Instagram</a></li></ul></div>
+  <div><h2 class="foot-h">Visit or call</h2><address>{BIZ["name"]}<br>{BIZ["street"]}<br>{BIZ["city"]}, {BIZ["region"]} {BIZ["zip"]}<br>{BIZ["hours"]}</address>
+  <ul><li><a href="tel:{BIZ["tel"]}" data-ev="footer">{BIZ["phone"]}</a></li><li><a href="mailto:{BIZ["email"]}" data-ev="footer">{BIZ["email"]}</a></li><li><a href="{BIZ["instagram"]}" rel="noopener" target="_blank">Instagram</a></li><li><a href="{BIZ["review"]}" rel="noopener" target="_blank" data-ev="footer">Leave us a review</a></li></ul></div>
 </div><div class="wrap foot-bottom"><p>© <span id="yr">2026</span> {BIZ["name"]} · Miami, Florida</p><p><a href="/contact-new-life-furniture-miami/">Request an estimate</a></p></div></footer>
 <div class="wa-wrap"><p class="wa-bubble" role="status"><button type="button" class="wa-close" aria-label="Dismiss">×</button><strong>Questions about your project?</strong><span>Send us photos on WhatsApp for a quick quote.</span></p>
 <a class="wa-float" href="https://wa.me/{BIZ["whatsapp"]}?text={WA_TEXT}" target="_blank" rel="noopener" data-ev="float" aria-label="Chat with us on WhatsApp"><span class="wa-icon"><svg width="30" height="30" viewBox="0 0 32 32" aria-hidden="true"><path fill="currentColor" d="M16 3a13 13 0 00-11.2 19.6L3 29l6.6-1.7A13 13 0 1016 3zm0 23.7a10.7 10.7 0 01-5.5-1.5l-.4-.2-3.9 1 1-3.8-.3-.4A10.7 10.7 0 1116 26.7zm5.9-8c-.3-.2-1.9-1-2.2-1s-.5-.2-.7.2-.8 1-1 1.2-.4.2-.7 0a8.8 8.8 0 01-4.4-3.8c-.3-.6.3-.5 1-1.7.1-.2 0-.4 0-.5l-1-2.4c-.3-.6-.5-.5-.7-.5h-.6a1.2 1.2 0 00-.9.4 3.7 3.7 0 00-1.1 2.7 6.4 6.4 0 001.3 3.4 14.6 14.6 0 005.6 5c2.1.9 2.9 1 4 .8a3.4 3.4 0 002.2-1.6 2.8 2.8 0 00.2-1.6c0-.2-.3-.3-.6-.5z"/></svg></span><span class="wa-label">Chat on WhatsApp</span><span class="wa-dot" aria-hidden="true"></span></a></div>
@@ -282,12 +286,17 @@ def page(path, title, desc, body, crumb=None, extra_schema=(), preload=None, noi
 
 BUSINESS_SCHEMA = {
     "@type": "HomeAndConstructionBusiness", "@id": SITE + "/#business", "name": BIZ["name"],
-    "alternateName": "New Life Furniture", "url": SITE + "/", "logo": SITE + "/img/logo.png", "image": SITE + "/img/og.jpg",
+    "url": SITE + "/", "logo": SITE + "/img/logo.png", "image": SITE + "/img/og.jpg",
     "telephone": BIZ["tel"], "email": BIZ["email"],
     "address": {"@type": "PostalAddress", "streetAddress": BIZ["street"], "addressLocality": BIZ["city"],
                 "addressRegion": BIZ["region"], "postalCode": BIZ["zip"], "addressCountry": "US"},
-    "areaServed": {"@type": "AdministrativeArea", "name": "South Florida"},
-    "sameAs": [u for u in (BIZ["instagram"], BIZ["angi"]) if u],
+    "geo": {"@type": "GeoCoordinates", "latitude": BIZ["lat"], "longitude": BIZ["lng"]},
+    "hasMap": BIZ["maps"],
+    "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+                                  "opens": BIZ["opens"], "closes": BIZ["closes"]},
+    "areaServed": [{"@type": "City", "name": "Miami"}, {"@type": "AdministrativeArea", "name": "Miami-Dade County"},
+                   {"@type": "AdministrativeArea", "name": "South Florida"}],
+    "sameAs": [u for u in (BIZ["maps"], BIZ["instagram"], BIZ["angi"]) if u],
     "award": "Angi Super Service Award 2025",
 }
 
@@ -337,7 +346,7 @@ SERVICES = [
        ("Do you pick up and deliver?", "Ask us when you request your estimate and we'll confirm the options for your location.")],
   related=[R_CUST, R_OUT, R_DRP]),
  dict(path="/custom-upholstered-furniture/", crumb="Custom Upholstered Furniture", service="Custom upholstered furniture",
-  title="Custom Upholstered Furniture Miami | New Life Furniture",
+  title="Custom Upholstered Furniture Miami | New Life Furniture Mfg.",
   desc="Custom upholstered furniture made in Miami: sofas, banquettes, benches, headboards, and chairs built to your size and style. Free estimates.",
   h1="Custom upholstered furniture, made to measure",
   lead="When the right piece doesn't exist, we build it. Sofas, banquettes, benches, headboards, and chairs designed around your space, your measurements, and your style, for homes and businesses across South Florida.",
@@ -371,7 +380,7 @@ SERVICES = [
        ("Do you handle large or multi-location projects?", "Contact us with the scope and we'll discuss capacity and timing for your project.")],
   related=[R_BOOTH, R_CUST, R_DRP]),
  dict(path="/booths-banquettes/", crumb="Booths & Banquettes", service="Booths & banquettes",
-  title="Custom Restaurant Booths & Banquettes Miami | New Life Furniture",
+  title="Custom Restaurant Booths & Banquettes Miami | New Life Furniture Mfg.",
   desc="Custom-built restaurant booths and banquettes plus booth reupholstery in Miami and South Florida. Kiln-dried hardwood frames, any style. Free estimates.",
   h1="Custom booths and banquettes, built to last",
   lead="We design and build booths and banquettes in virtually any style for restaurants, bars, hotels, and homes, and we reupholster existing booths to make them look new again.",
@@ -388,7 +397,7 @@ SERVICES = [
        ("Can you reupholster booths without closing the restaurant for long?", "Let us know your schedule and we'll discuss a plan that keeps downtime to a minimum.")],
   related=[R_COM, R_REUP, R_OUT]),
  dict(path="/marine/", crumb="Marine Upholstery", service="Marine upholstery",
-  title="Marine Upholstery Miami | Boat & Yacht Seating | New Life Furniture",
+  title="Marine Upholstery Miami | Boat & Yacht Seating | New Life Furniture Mfg.",
   desc="Marine upholstery in Miami and South Florida: boat seats, yacht cushions, and benches in marine-grade vinyl and outdoor fabrics. Request a free estimate.",
   h1="Marine upholstery for boats and yachts",
   lead="Sun, salt, and water are hard on boat seating. We reupholster and fabricate seats, cushions, and benches for boats and yachts using marine-grade materials made for South Florida conditions.",
@@ -404,7 +413,7 @@ SERVICES = [
        ("How do I get an estimate?", "Send photos of the seats or cushions, approximate sizes, and your boat's location using the form, or call us.")],
   related=[R_OUT, R_REUP, R_COM]),
  dict(path="/outdoor-cushions/", crumb="Outdoor Cushions", service="Outdoor cushions",
-  title="Custom Outdoor & Patio Cushions Miami | New Life Furniture",
+  title="Custom Outdoor & Patio Cushions Miami | New Life Furniture Mfg.",
   desc="Custom outdoor and patio cushions made in Miami with performance fabrics such as Sunbrella. Replacement cushions for homes, condos, and hotels. Free estimates.",
   h1="Custom outdoor and patio cushions",
   lead="Replace faded, flattened patio cushions with custom-made ones that fit your furniture exactly, sewn in outdoor performance fabrics that stand up to the Florida sun.",
@@ -420,7 +429,7 @@ SERVICES = [
        ("Do you make cushions for hotels and condos?", "Yes. We handle residential and commercial outdoor seating.")],
   related=[R_MAR, R_REUP, R_DRP]),
  dict(path="/draperies/", crumb="Custom Draperies", service="Draperies & window treatments",
-  title="Custom Draperies & Window Treatments Miami | New Life Furniture",
+  title="Custom Draperies & Window Treatments Miami | New Life Furniture Mfg.",
   desc="Custom draperies, blinds, shades, and window treatments for homes and businesses in Miami and South Florida. Fabrication and installation. Free estimates.",
   h1="Custom draperies and window treatments",
   lead="Tailored draperies, shades, and blinds that add privacy, control light, and finish a room, for homes and commercial interiors across South Florida.",
@@ -452,7 +461,7 @@ def home():
             ("Is reupholstering worth it?", "For well-built furniture you love, usually yes. We'll give you an honest recommendation with your estimate.")]
     body = f'''
 <section class="hero">
-  <div class="hero-bg">{img("hero", "Living room with chairs reupholstered in blue fabric by New Life Furniture", sizes="100vw", eager=True)}</div>
+  <div class="hero-bg">{img("hero", "Living room with chairs reupholstered in blue fabric by New Life Furniture Mfg.", sizes="100vw", eager=True)}</div>
   <div class="hero-award" aria-hidden="true">{ANGI.format("")}</div>
   <div class="wrap hero-grid"><div class="hero-copy">
     <p class="eyebrow">Miami upholstery workshop · 30+ years</p>
@@ -471,7 +480,7 @@ def home():
 <section class="section dark"><div class="wrap"><div class="row-head"><div><p class="eyebrow">Our work</p><h2>Recent projects</h2></div>{car_ctrl("home-gal", "photo", light=True)}</div><div class="car" data-car><div class="mosaic car-track" id="home-gal">{gal}</div></div><p class="center"><a class="link light" href="/projects/">View all projects <span aria-hidden="true">→</span></a></p></div></section>
 <section class="section"><div class="wrap split">
   <div class="split-img">{img("team", "")}</div>
-  <div><p class="eyebrow">About New Life Furniture</p><h2>Three decades of handcrafted upholstery</h2>
+  <div><p class="eyebrow">About New Life Furniture Mfg.</p><h2>Three decades of handcrafted upholstery</h2>
   <p>New Life Furniture Mfg. specializes in custom upholstered furniture, reupholstery, and fabrication for residences and businesses across South Florida. For more than 30 years our team has delivered handcrafted quality with fine fabrics, leather, vinyl, and marine materials.</p>
   <p>Clients work directly with Ian and the team, from the first conversation and fabric selection to the finished piece.</p>
   <a class="link" href="/about/">More about us <span aria-hidden="true">→</span></a></div>
@@ -480,7 +489,7 @@ def home():
 {testimonials()}
 <section class="section"><div class="wrap narrow"><p class="eyebrow">FAQ</p><h2>Questions we hear often</h2>{faq(faqs)}</div></section>
 {final_cta()}'''
-    return page("/", "Furniture Reupholstery & Custom Upholstery Miami | New Life Furniture",
+    return page("/", "Furniture Reupholstery & Custom Upholstery Miami | New Life Furniture Mfg.",
                 "Miami upholstery workshop, 30+ years. Furniture reupholstery, custom booths, marine upholstery, outdoor cushions, and draperies. Free estimates.",
                 body, None, [faq_schema(faqs)], preload="hero", preload_sizes="100vw")
 
@@ -493,13 +502,13 @@ def projects():
                    "".join(f'<figure>{img(n, a, "(min-width: 900px) 25vw, 50vw")}<figcaption>{a}</figcaption></figure>' for n, a in g) + '</div></div></section>'
                    for i, (t, g) in enumerate(groups))
     body = f'''<section class="page-hero"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>Projects</span></nav>
-<h1>Our projects</h1><p class="lead">A selection of residential, commercial, marine, and drapery work by New Life Furniture across South Florida.</p>{cta_row()}</div></section>{secs}{final_cta("Have a project like these?")}'''
-    return page("/projects/", "Upholstery Projects & Gallery | New Life Furniture Miami",
-                "See reupholstery, custom booth, commercial, marine, outdoor cushion, and drapery projects completed by New Life Furniture in South Florida.", body, "Projects")
+<h1>Our projects</h1><p class="lead">A selection of residential, commercial, marine, and drapery work by New Life Furniture Mfg. across South Florida.</p>{cta_row()}</div></section>{secs}{final_cta("Have a project like these?")}'''
+    return page("/projects/", "Upholstery Projects & Gallery | New Life Furniture Mfg. Miami",
+                "See reupholstery, custom booth, commercial, marine, outdoor cushion, and drapery projects completed by New Life Furniture Mfg. in South Florida.", body, "Projects")
 
 def about():
     body = f'''<section class="page-hero"><div class="wrap"><nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span>About</span></nav>
-<h1>About New Life Furniture</h1><p class="lead">A Miami upholstery and fabrication workshop serving homes and businesses across South Florida for more than 30 years.</p></div></section>
+<h1>About New Life Furniture Mfg.</h1><p class="lead">A Miami upholstery and fabrication workshop serving homes and businesses across South Florida for more than 30 years.</p></div></section>
 <section class="section"><div class="wrap split"><div class="split-img">{img("about", "")}</div><div>
 <h2>Craftsmanship you can see and feel</h2>
 <p>At New Life Furniture Mfg., we specialize in custom upholstered furniture, reupholstery, and fabrication. Our team combines decades of hands-on experience with quality materials to create pieces tailored to each client's vision.</p>
@@ -516,16 +525,18 @@ def contact():
 <h1>Request a free estimate</h1>
 <p class="lead">Tell us about your furniture or project. Photos help us give you a faster, more accurate estimate. You can also text or email them after you submit.</p>
 <ul class="contact-list big"><li><span>Call</span><a href="tel:{BIZ["tel"]}" data-ev="contact">{BIZ["phone"]}</a></li>
-<li><span>Email</span><a href="mailto:{BIZ["email"]}" data-ev="contact">{BIZ["email"]}</a></li><li><span>Workshop</span>{BIZ["street"]}<br>{BIZ["city"]}, {BIZ["region"]} {BIZ["zip"]}</li></ul>
+<li><span>Email</span><a href="mailto:{BIZ["email"]}" data-ev="contact">{BIZ["email"]}</a></li><li><span>Workshop</span>{BIZ["street"]}<br>{BIZ["city"]}, {BIZ["region"]} {BIZ["zip"]}</li><li><span>Hours</span>{BIZ["hours"]}</li></ul>
 <p class="fine">Serving homes and businesses across South Florida.</p></div>
 <div class="lp-form">{form()}</div></div></section>
+<section class="section"><div class="wrap"><h2>Find our workshop</h2><iframe class="map" src="{BIZ["maps"]}&amp;hl=en&amp;output=embed" title="Map to {BIZ["name"]}, {BIZ["street"]}, {BIZ["city"]}" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+<p><a class="link" href="{BIZ["maps"]}" target="_blank" rel="noopener">Open in Google Maps <span aria-hidden="true">→</span></a></p></div></section>
 <section class="section sand"><div class="wrap narrow">{faq([("What should I include in my request?", "The type of piece or project, approximate size or quantity, the material you have in mind, and your city. Photos are very helpful."), ("How quickly will you respond?", "We review every request and reply as soon as possible, usually by phone or email."), ("Is the estimate really free?", "Yes. Estimates are free and there's no obligation.")])}</div></section>'''
-    return page("/contact-new-life-furniture-miami/", "Contact & Free Estimate | New Life Furniture Miami",
-                f"Request a free upholstery estimate from New Life Furniture in Miami. Call {BIZ['phone']} or send photos and project details online.", body, "Contact")
+    return page("/contact-new-life-furniture-miami/", "Contact & Free Estimate | New Life Furniture Mfg. Miami",
+                f"Request a free upholstery estimate from New Life Furniture Mfg. in Miami. Call {BIZ['phone']} or send photos and project details online.", body, "Contact")
 
 def notfound():
     body = f'<section class="page-hero"><div class="wrap narrow"><h1>Page not found</h1><p class="lead">The page you are looking for has moved. Try one of our services below or request an estimate.</p>{cta_row()}<div class="cards" style="margin-top:3rem">{"".join(card(*c) for c in [R_REUP, R_COM, R_MAR])}</div></div></section>'
-    return page("/404.html", "Page not found | New Life Furniture", "Page not found.", body, noindex=True)
+    return page("/404.html", "Page not found | New Life Furniture Mfg.", "Page not found.", body, noindex=True)
 
 BASE = os.environ.get("BASE", "")  # preview build under a sub-path, e.g. BASE=/new-life-furniture (noindex, no GTM)
 

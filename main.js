@@ -100,7 +100,7 @@ document.querySelectorAll('.lead-form').forEach(form => {
     if (!endpoint) {
       // No backend configured yet: open the visitor's email app. Not counted as a conversion.
       const d = new FormData(form), body = ['name', 'phone', 'email', 'service', 'project_type', 'message'].map(k => `${k}: ${d.get(k) || ''}`).join('\n');
-      location.href = `mailto:Ian@newlifefurniture.com?subject=${encodeURIComponent('Estimate request: ' + d.get('service'))}&body=${encodeURIComponent(body)}`;
+      location.href = `mailto:newlifefurnituremfg@gmail.com?subject=${encodeURIComponent('Estimate request: ' + d.get('service'))}&body=${encodeURIComponent(body)}`;
       status.className = 'form-status'; status.textContent = 'Your email app should open with your request. Send it to complete, or call (954) 895-8504.';
       return;
     }
@@ -120,7 +120,7 @@ document.querySelectorAll('.lead-form').forEach(form => {
       status.focus?.();
     } catch (_) {
       submit.disabled = false; submit.textContent = 'Send request';
-      status.className = 'form-status bad'; status.textContent = 'Something went wrong. Please call (954) 895-8504 or email Ian@newlifefurniture.com.';
+      status.className = 'form-status bad'; status.textContent = 'Something went wrong. Please call (954) 895-8504 or email newlifefurnituremfg@gmail.com.';
     }
   });
 });
