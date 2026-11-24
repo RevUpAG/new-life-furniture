@@ -294,8 +294,8 @@ BUSINESS_SCHEMA = {
     "hasMap": BIZ["maps"],
     "openingHoursSpecification": {"@type": "OpeningHoursSpecification", "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
                                   "opens": BIZ["opens"], "closes": BIZ["closes"]},
-    "areaServed": [{"@type": "City", "name": "Miami"}, {"@type": "AdministrativeArea", "name": "Miami-Dade County"},
-                   {"@type": "AdministrativeArea", "name": "South Florida"}],
+    "areaServed": [{"@type": "City", "name": c + ", FL"} for c in  # same list as the Google Business Profile
+                   ("Miami", "Aventura", "Hollywood", "Miami Beach", "Coral Gables", "Pompano Beach", "Pembroke Pines", "Fort Lauderdale")],
     "sameAs": [u for u in (BIZ["maps"], BIZ["instagram"], BIZ["angi"]) if u],
     "award": "Angi Super Service Award 2025",
 }
